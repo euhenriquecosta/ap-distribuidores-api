@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { userController } from "../controllers/userController";
+import { distributorController } from "@/controllers/distributorController";
 
-export const userRoutes = async (fastify: FastifyInstance) => {
-  fastify.get('/distribuitors', userController.listUser);
+export const distributorRoutes = async (fastify: FastifyInstance) => {
+  fastify.get('/distributors', distributorController.listDistributors);
+  fastify.post('/distributors', distributorController.createDistributors);
 }
