@@ -46,7 +46,3 @@ export const findDistributor = async (id: number) => {
 export const findDistributorsByName = async (name: string) => {
   return prisma.distributor.findFirst({ where: {contactFirstName: name} });
 }
-
-export const findDistributorById = async (id: number) => {
-  return prisma.distributor.findFirst({ where: {id} });
-}

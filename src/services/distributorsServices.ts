@@ -1,5 +1,5 @@
 import { IDistributor } from "@/interfaces/distributorInterface";
-import { createDistributors, findDistributorById, listDistributors } from "../repositories/distributors/distributorsRepositories";
+import { createDistributors, findDistributor, listDistributors } from "../repositories/distributors/distributorsRepositories";
 
 export const listDistributorsService = async () => {
   return listDistributors();
@@ -18,6 +18,6 @@ export const deleteDistributorService = async (id: number) => {
 }
 
 export const findDistributorService = async (id: number) => {
-  return findDistributorById(id);
+  return findDistributor(id);
 }
 
