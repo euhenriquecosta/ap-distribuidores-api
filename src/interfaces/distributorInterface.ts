@@ -1,6 +1,7 @@
 
 export interface IDistributor {
   id: number;
+  userId: number;
   address: string;
   region: string;
   postalCode: string;
@@ -11,7 +12,6 @@ export interface IDistributor {
   contactEmail: string;
   contactFirstName: string;
   contactLastName: string;
-  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }

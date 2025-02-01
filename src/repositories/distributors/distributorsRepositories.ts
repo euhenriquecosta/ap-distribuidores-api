@@ -1,4 +1,4 @@
-import { IDistributor } from "@/interfaces/distributorInterface";
+import { IDistributor } from "../../interfaces/distributorInterface";
 import { prisma } from "../../prisma/script";
 
 export const listDistributors = async () => {
@@ -13,7 +13,6 @@ export const listDistributors = async () => {
 export const createDistributors = async (data: IDistributor) => {
   return prisma.distributor.create({ 
     data: {
-      id: data.id,
       userId: data.userId,
       contactFirstName: data.contactFirstName,
       contactLastName: data.contactLastName,

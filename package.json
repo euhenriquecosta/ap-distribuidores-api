@@ -16,8 +16,9 @@
 		"typescript": "^5.7.3"
 	},
 	"dependencies": {
+		"@fastify/cors": "^10.0.2",
 		"@prisma/client": "6.3.0",
-		"bcrypt": "^5.1.1",
+		"bcrypt": "^5.0.0",
 		"dotenv": "^16.4.7",
 		"fastify": "^5.2.1",
 		"jsonwebtoken": "^9.0.2",
