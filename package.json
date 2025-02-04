@@ -33,6 +33,7 @@
 		"fastify": "^5.2.1",
 		"jsonwebtoken": "^9.0.2",
 		"pg": "^8.13.1",
-		"prisma": "^6.3.0"
+		"prisma": "^6.3.0",
+		"wait-for-it": "^1.0.0"
 	}
 }
