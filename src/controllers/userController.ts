@@ -1,8 +1,8 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { createUserService, getUserByEmailService, listUserService } from "../services/userServices";
 import bcrypt from "bcrypt";
-import { generateToken } from "@/utils/jwt";
-import { CreateUserRequestBody } from "@/interfaces/userInterface";
+import { generateToken } from "../utils/jwt";
+import { CreateUserRequestBody } from "../interfaces/userInterface";
 
 
 interface LoginUserRequestBody {

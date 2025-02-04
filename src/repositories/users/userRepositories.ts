@@ -1,15 +1,15 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../prisma/script";
-import { hashPassword } from "@/utils/crypt";
+import { hashPassword } from "../../utils/crypt";
 import { UUID } from "node:crypto";
-import { CreateUserRequestBody } from "@/interfaces/userInterface";
+import { CreateUserRequestBody } from "../../interfaces/userInterface";
 
 export const listUsers = async () => {
   try {
     return await prisma.user.findMany();
   } catch (error) {
     console.error("❌ Error listing users:", error);
-    throw new Error(`Database error: ${error.message}`);
+    throw new Error(`Database error: ${error}`);
   }
 };
 

@@ -2,7 +2,7 @@ import {
   createDistributorsService, 
   findDistributorService, 
   listDistributorsService 
-} from "@/services/distributorsServices";
+} from "../services/distributorsServices";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { IDistributor } from "../interfaces/distributorInterface";
 

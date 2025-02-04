@@ -1,13 +1,14 @@
 {
-	"name": "ap-distribuidores-api",
+	"name": "api-distribuidores",
 	"version": "1.0.0",
 	"description": "",
-	"license": "MIT",
-	"main": "index.js",
+	"license": "ISC",
+	"main": "dist/server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.js",
-		"dev": "tsx watch src/server.ts"
+		"start": "node dist/server.js",
+		"dev": "tsx watch src/server.ts",
+		"build": "tsc"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2",
@@ -23,6 +24,7 @@
 		"dotenv": "^16.4.7",
 		"fastify": "^5.2.1",
 		"jsonwebtoken": "^9.0.2",
+		"pg": "^8.13.1",
 		"prisma": "^6.3.0"
 	}
 }

@@ -1,14 +1,12 @@
-import { randomUUID, UUID } from "node:crypto";
 import { IDistributor } from "../../interfaces/distributorInterface";
 import { prisma } from "../../prisma/script";
-import { RegionEnum } from "@prisma/client";
 
 export const listDistributors = async () => {
   try {
     return await prisma.distributor.findMany();
   } catch (error) {
     console.error("❌ Error listing distributors:", error);
-    throw new Error(`Database error: ${error.message}`);
+    throw new Error(`Database error: ${error}`);
   }
 }
 
@@ -33,7 +31,7 @@ export const createDistributors = async (data: IDistributor ) => {
     });
   } catch (error) {
     console.error("❌ Erro ao criar o distribuidor:", error);
-    throw new Error(`Database error: ${error.message}`);
+    throw new Error(`Database error: ${error}`);
    }
 }
 

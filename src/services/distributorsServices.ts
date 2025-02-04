@@ -1,4 +1,4 @@
-import { IDistributor } from "@/interfaces/distributorInterface";
+import { IDistributor } from "../interfaces/distributorInterface";
 import { createDistributors, findDistributor, listDistributors } from "../repositories/distributors/distributorsRepositories";
 
 export const listDistributorsService = async () => {
