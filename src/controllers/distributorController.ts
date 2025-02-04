@@ -19,11 +19,11 @@ export const distributorController = {
 
   createDistributors: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-      const distributors = await createDistributorsService(request.body as IDistributor);
-      reply.status(201).send(distributors);
+      const { DISTRIBUTOR_ID } = await createDistributorsService(request.body as IDistributor);
+      reply.status(201).send({ id: DISTRIBUTOR_ID, message: "Distribuidor criado com sucesso!" });
     } catch (error) {
-      console.error("Error creating distributor:", error);
-      reply.status(500).send({ error: "Internal Server Error" });
+      console.error("Erro criando o distribuidor:", error);
+      reply.status(500).send({ message: "Erro ao criar o distribuidor!" });
     }
   },
 

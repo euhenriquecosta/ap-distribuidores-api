@@ -1,6 +1,5 @@
 import { IDistributor } from "@/interfaces/distributorInterface";
 import { createDistributors, findDistributor, listDistributors } from "../repositories/distributors/distributorsRepositories";
-import { UUID } from "node:crypto";
 
 export const listDistributorsService = async () => {
   return listDistributors();

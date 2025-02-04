@@ -13,24 +13,29 @@ export const listDistributors = async () => {
 }
 
 export const createDistributors = async (data: IDistributor ) => {
-  return prisma.distributor.create({ 
-    data: {
-      DISTRIBUTOR_ID: data.DISTRIBUTOR_ID,
-      FIRST_NAME: data.FIRST_NAME,
-      LAST_NAME: data.LAST_NAME,
-      EMAIL: data.EMAIL,
-      PHONE_NUMBER: data.PHONE_NUMBER,
-      ADDRESS: data.ADDRESS,
-      LATITUDE: data.LATITUDE,
-      LONGITUDE: data.LONGITUDE,
-      POSTAL_CODE: data.POSTAL_CODE,
-      REGION: data.REGION,
-      WHATSAPP_NUMBER: data.WHATSAPP_NUMBER,
-      PLAN_TYPE: data.PLAN_TYPE,
-      CREATED_AT: new Date(),
-      UPDATED_AT: new Date(),
-    }
-   });
+  try {
+    return prisma.distributor.create({ 
+      data: {
+        DISTRIBUTOR_ID: data.DISTRIBUTOR_ID,
+        FIRST_NAME: data.FIRST_NAME,
+        LAST_NAME: data.LAST_NAME,
+        EMAIL: data.EMAIL,
+        PHONE_NUMBER: data.PHONE_NUMBER,
+        ADDRESS: data.ADDRESS,
+        LATITUDE: data.LATITUDE,
+        LONGITUDE: data.LONGITUDE,
+        POSTAL_CODE: data.POSTAL_CODE,
+        REGION: data.REGION,
+        WHATSAPP_NUMBER: data.WHATSAPP_NUMBER,
+        PLAN_TYPE: data.PLAN_TYPE,
+        CREATED_AT: new Date(),
+        UPDATED_AT: new Date(),
+      }
+    });
+  } catch (error) {
+    console.error("❌ Erro ao criar o distribuidor:", error);
+    throw new Error(`Database error: ${error.message}`);
+   }
 }
 
 export const updateDistributors = async (id: string, data: any) => {
