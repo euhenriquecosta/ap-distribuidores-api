@@ -6,14 +6,14 @@ import cors from '@fastify/cors';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || '3333';
 const HOST = process.env.HOST || '0.0.0.0';
 
 if (!process.env.DATABASE_URL) {
   console.warn("⚠️ DATABASE_URL não definida! Verifique suas variáveis de ambiente.");
 }
 
-const server = Fastify({ logger: false });
+const server = Fastify({ logger: true });
 
 server.register(userRoutes, { prefix: '/api' });
 server.register(distributorRoutes, { prefix: '/api' });

@@ -7,7 +7,6 @@ tsconfig.tsbuildinfo
 
 npm-debug.log
 .git
-prisma/migrations/*
-prisma/dev.db
-prisma/dev.db-journal
 compose
+
+.vscode
