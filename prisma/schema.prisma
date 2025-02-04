@@ -39,8 +39,8 @@ model Distributor {
   ADDRESS         String
   REGION          RegionEnum
   POSTAL_CODE      String
-  LONGITUDE       Float
-  LATITUDE        Float
+  LONGITUDE       Float @unique
+  LATITUDE        Float @unique
   WHATSAPP_NUMBER  String
   PHONE_NUMBER     String
   EMAIL    String
@@ -48,6 +48,8 @@ model Distributor {
   LAST_NAME  String
   CREATED_AT       DateTime @default(now())
   UPDATED_AT       DateTime @updatedAt
+
+  @@unique([LATITUDE, LONGITUDE], name: "UNIQUE_LAT_LONG")
 
   @@index([REGION], name: "IDX_DISTRIBUTOR_REGION")
   @@index([POSTAL_CODE], name: "IDX_DISTRIBUTOR_POSTAL_CODE")

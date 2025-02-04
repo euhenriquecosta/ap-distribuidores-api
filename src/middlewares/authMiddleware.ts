@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import jwt from "jsonwebtoken";
+import { verifyToken } from "../utils/jwt";
 
 export async function authMiddleware(request: FastifyRequest, reply: FastifyReply) {
   try {
@@ -7,18 +7,18 @@ export async function authMiddleware(request: FastifyRequest, reply: FastifyRepl
     const authHeader = request.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return reply.status(401).send({ error: "Token não fornecido" });
+      return reply.status(401).send({ message: "Token não fornecido" });
     }
 
     const token = authHeader.split(" ")[1]; // Remove "Bearer " e pega apenas o token
 
-    // Verifica e decodifica o token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-    // Armazena os dados do usuário no request
-    request.body = decoded;
+    verifyToken(token); 
+    
+    // const decoded = verifyToken(token); Serve para guardar as informações desse jwt e salvar em um json
+    // request.body = decoded; 
 
   } catch (error) {
-    return reply.status(401).send({ error: "Token inválido ou expirado" });
+    console.error("Erro na autenticação:", error);
+    return reply.status(401).send({ message: "Token inválido ou expirado" });
   }
 }

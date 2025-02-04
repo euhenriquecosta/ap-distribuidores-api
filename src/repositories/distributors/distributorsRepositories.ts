@@ -1,4 +1,4 @@
-import { UUID } from "node:crypto";
+import { randomUUID, UUID } from "node:crypto";
 import { IDistributor } from "../../interfaces/distributorInterface";
 import { prisma } from "../../prisma/script";
 import { RegionEnum } from "@prisma/client";
@@ -16,7 +16,7 @@ export const createDistributors = async (data: IDistributor ) => {
   try {
     return prisma.distributor.create({ 
       data: {
-        DISTRIBUTOR_ID: data.DISTRIBUTOR_ID,
+        PLAN_TYPE: data.PLAN_TYPE,
         FIRST_NAME: data.FIRST_NAME,
         LAST_NAME: data.LAST_NAME,
         EMAIL: data.EMAIL,
@@ -27,7 +27,6 @@ export const createDistributors = async (data: IDistributor ) => {
         POSTAL_CODE: data.POSTAL_CODE,
         REGION: data.REGION,
         WHATSAPP_NUMBER: data.WHATSAPP_NUMBER,
-        PLAN_TYPE: data.PLAN_TYPE,
         CREATED_AT: new Date(),
         UPDATED_AT: new Date(),
       }
