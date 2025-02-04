@@ -5,10 +5,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum PlanType {
+enum PlanTypeEnum {
   pro
   master
   starter
+}
+
+enum RegionEnum {
+  norte
+  nordeste
+  centrooeste
+  sudeste
+  sul
 }
 
 datasource db {
@@ -16,7 +24,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  USER_ID           Int      @id @default(autoincrement())
+  USER_ID           String      @id @default(uuid())
   FIRST_NAME    String
   LAST_NAME     String
   EMAIL        String   @unique
@@ -26,10 +34,10 @@ model User {
 }
 
 model Distributor {
-  DISTRIBUTOR_ID              Int      @id @default(autoincrement())
-  PLAN_TYPE PlanType
+  DISTRIBUTOR_ID              String      @id @default(uuid())
+  PLAN_TYPE PlanTypeEnum
   ADDRESS         String
-  REGION          String
+  REGION          RegionEnum
   POSTAL_CODE      String
   LONGITUDE       Float
   LATITUDE        Float

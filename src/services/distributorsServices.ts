@@ -1,5 +1,6 @@
 import { IDistributor } from "@/interfaces/distributorInterface";
 import { createDistributors, findDistributor, listDistributors } from "../repositories/distributors/distributorsRepositories";
+import { UUID } from "node:crypto";
 
 export const listDistributorsService = async () => {
   return listDistributors();
@@ -9,15 +10,15 @@ export const createDistributorsService = async (data: IDistributor) => {
   return createDistributors(data);
 }
 
-export const updateDistributorsService = async (id: number, data: any) => {
+export const updateDistributorsService = async (id: string, data: any) => {
   // return updateDistributors(id, data);
 }
 
-export const deleteDistributorService = async (id: number) => {
+export const deleteDistributorService = async (id: string) => {
   // return deleteDistributor(id);
 }
 
-export const findDistributorService = async (id: number) => {
+export const findDistributorService = async (id: string) => {
   return findDistributor(id);
 }
 

@@ -30,16 +30,12 @@ export const distributorController = {
   findDistributor: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const { id } = request.params as { id: string }; // params sempre retorna string
-      const distributorId = Number(id);
-
-      if (isNaN(distributorId)) {
-        return reply.status(400).send({ error: "Invalid distributor ID" });
-      }
+      const distributorId = id;
 
       const distributor = await findDistributorService(distributorId);
 
       if (!distributor) {
-        return reply.status(404).send({ error: "Distributor not found" });
+        return reply.status(404).send({ error: "Distribuidor não encontrado!" });
       }
 
       reply.status(200).send(distributor);

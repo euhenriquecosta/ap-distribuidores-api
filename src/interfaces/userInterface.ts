@@ -1,11 +1,24 @@
+import { UUID } from "node:crypto";
+
 export interface IUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
+  USER_ID: UUID;
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  EMAIL: string;
+  PASSWORD: string;
+  CREATED_AT: Date;
+  UPDATED_AT: Date;
+}
+
+export interface CreateUserRequestBody {
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  EMAIL: string;
+  PASSWORD: string;
+}
+
+export interface IListUser {
+  users: IUser[];
 }
 
 export interface ILogin {
@@ -72,9 +85,6 @@ export interface IGenerateToken {
   email: string;
 }
 
-export interface IListUser {
-  users: IUser[];
-}
 
 export interface ICreateUserService {
   data: ICreateUser;

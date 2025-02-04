@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../prisma/script";
 import { hashPassword } from "@/utils/crypt";
+import { UUID } from "node:crypto";
+import { CreateUserRequestBody } from "@/interfaces/userInterface";
 
 export const listUsers = async () => {
   try {
@@ -11,16 +13,16 @@ export const listUsers = async () => {
   }
 };
 
-export const createUser = async (data: { firstName: string; lastName: string; email: string; password: string }) => {
+export const createUser = async (data: CreateUserRequestBody) => {
   try {
-    const hashedPassword = await hashPassword(data.password);
+    const hashedPassword = await hashPassword(data.PASSWORD);
 
     const newUser = await prisma.user.create({
       data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        passwordHash: hashedPassword,
+        FIRST_NAME: data.FIRST_NAME,
+        LAST_NAME: data.LAST_NAME,
+        EMAIL: data.EMAIL,
+        PASSWORD: hashedPassword,
       },
     });
 
@@ -31,18 +33,18 @@ export const createUser = async (data: { firstName: string; lastName: string; em
   }
 };
 
-export const updateUser = async (id: number, data: any) => {
-  return prisma.user.update({ where: { id }, data });
+export const updateUser = async (id: UUID, data: any) => {
+  return prisma.user.update({ where: { USER_ID: id }, data });
 };
 
-export const deleteUser = async (id: number) => {
-  return prisma.user.delete({ where: { id } });
+export const deleteUser = async (id: UUID) => {
+  return prisma.user.delete({ where: { USER_ID: id } });
 };
 
 export const getUserByEmail = async (email: string) => {
   return await prisma.user.findUnique({
     where: {
-      email: email
+      EMAIL: email
     }
   });
 };
