@@ -35,10 +35,11 @@ services:
     networks:
       - APNet
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`api.appro.com.br`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.services.app.loadbalancer.server.port=3333"
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(`api.appro.com.br`)
+      - traefik.http.routers.app.entrypoints=websecure
+      - traefik.http.routers.minio_public.tls.certresolver=letsencryptresolver
+      - traefik.http.services.app.loadbalancer.server.port=3333
     restart: unless-stopped
     command: ["/bin/sh", "-c", "npx prisma migrate deploy && npm start"]
 
