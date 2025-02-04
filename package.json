@@ -8,7 +8,13 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node dist/server.js",
 		"dev": "tsx watch src/server.ts",
+		"migrate": "prisma migrate deploy",
+		"studio": "prisma studio",
 		"build": "tsc"
+	},
+	"engines": {
+		"node": "18.x",
+		"npm": "11.x"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2",
@@ -20,7 +26,9 @@
 	"dependencies": {
 		"@fastify/cors": "^10.0.2",
 		"@prisma/client": "6.3.0",
+		"@types/bcryptjs": "^2.4.6",
 		"bcrypt": "^5.0.0",
+		"bcryptjs": "^2.4.3",
 		"dotenv": "^16.4.7",
 		"fastify": "^5.2.1",
 		"jsonwebtoken": "^9.0.2",

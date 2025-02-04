@@ -6,6 +6,13 @@ import cors from '@fastify/cors';
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3333;
+const HOST = process.env.HOST || '0.0.0.0';
+
+if (!process.env.DATABASE_URL) {
+  console.warn("⚠️ DATABASE_URL não definida! Verifique suas variáveis de ambiente.");
+}
+
 const server = Fastify({ logger: false });
 
 server.register(userRoutes, { prefix: '/api' });
@@ -16,11 +23,11 @@ server.register(cors, {
   origin: true, 
 });
 
-server.listen({port: 3333}, (err: any, address) => {
+server.listen({port: Number(PORT), host: HOST}, (err: any, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
 
-  console.log(`Server rodando em localhost:3333`); 
+  console.log(`🚀 Server rodando em ${address}`); 
 });
