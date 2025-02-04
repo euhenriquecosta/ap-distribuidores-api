@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { createUserService, getUserByEmailService, listUserService } from "../services/userServices";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt";
 import { CreateUserRequestBody } from "../interfaces/userInterface";
 
