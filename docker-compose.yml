@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   postgres:
     image: postgres:14-alpine
@@ -10,9 +12,9 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./postgres/init:/docker-entrypoint-initdb.d  # Scripts SQL iniciais
+      - ./postgres/init:/docker-entrypoint-initdb.d
     networks:
-      - app-network
+      - APNet
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U apdistribuidores -d ap"]
       interval: 5s
@@ -20,22 +22,23 @@ services:
       retries: 5
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: euhenriquecosta/ap-distribuidores-api-app:latest
     container_name: node-app
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://apdistribuidores:A1b2C3d4E5f6G7h8I9j0K!@postgres-db:5432/ap?schema=public
       JWT_SECRET_KEY: skdjaksjdkmasdkamskm
-
     ports:
       - "3333:3333"
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     networks:
-      - app-network
+      - APNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`api.appro.com.br`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.services.app.loadbalancer.server.port=3333"
     restart: unless-stopped
     command: ["/bin/sh", "-c", "npx prisma migrate deploy && npm start"]
 
@@ -43,5 +46,7 @@ volumes:
   postgres_data:
 
 networks:
-  app-network:
-    driver: bridge
+  APNet:
+    external: true
+    attachable: true
+    name: APNet
