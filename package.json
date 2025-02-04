@@ -14,10 +14,6 @@
 		"studio": "prisma studio",
 		"build": "tsc"
 	},
-	"engines": {
-		"node": "18.x",
-		"npm": "11.x"
-	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2",
 		"@types/jsonwebtoken": "^9.0.8",
