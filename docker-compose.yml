@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: A1b2C3d4E5f6G7h8I9j0K!
       POSTGRES_DB: ap
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
@@ -38,16 +38,41 @@ services:
       - traefik.enable=true
       - traefik.http.routers.app.rule=Host(`api.appro.com.br`)
       - traefik.http.routers.app.entrypoints=websecure
-      - traefik.http.routers.minio_public.tls.certresolver=letsencryptresolver
+      - traefik.http.routers.app.tls.certresolver=letsencryptresolver
       - traefik.http.services.app.loadbalancer.server.port=3333
     restart: unless-stopped
+    deploy:
+      replicas: 1
     command: ["/bin/sh", "-c", "npx prisma migrate deploy && npm start"]
+
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.letsencryptresolver.acme.tlschallenge=true
+      - --certificatesresolvers.letsencryptresolver.acme.email=admin@appro.com.br
+      - --certificatesresolvers.letsencryptresolver.acme.storage=/etc/traefik/acme.json
+      - --log.level=DEBUG
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - APNet
+    volumes:
+      - traefik_data:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock # Permite o Traefik acessar o Docker
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+  traefik_data:
 
 networks:
   APNet:
-    external: true
+    driver: bridge
+    external: false
     attachable: true
     name: APNet
