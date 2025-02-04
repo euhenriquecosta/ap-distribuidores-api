@@ -1,27 +1,6 @@
 version: "3.8"
 
 services:
-  postgres:
-    image: postgres:14-alpine
-    container_name: postgres-db
-    environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_USER: apdistribuidores
-      POSTGRES_PASSWORD: A1b2C3d4E5f6G7h8I9j0K!
-      POSTGRES_DB: ap
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./postgres/init:/docker-entrypoint-initdb.d
-    networks:
-      - APNet
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U apdistribuidores -d ap"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   app:
     image: euhenriquecosta/ap-distribuidores-api-app:latest
     container_name: node-app
