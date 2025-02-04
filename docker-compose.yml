@@ -36,7 +36,7 @@ services:
       - APNet
     labels:
       - traefik.enable=true
-      - traefik.http.routers.app.rule=Host(`api.appro.com.br`)
+      - traefik.http.routers.app.rule=Host(`teste.appro.com.br`)
       - traefik.http.routers.app.entrypoints=websecure
       - traefik.http.routers.app.tls.certresolver=letsencryptresolver
       - traefik.http.services.app.loadbalancer.server.port=3333
@@ -55,7 +55,6 @@ services:
       - --certificatesresolvers.letsencryptresolver.acme.tlschallenge=true
       - --certificatesresolvers.letsencryptresolver.acme.email=admin@appro.com.br
       - --certificatesresolvers.letsencryptresolver.acme.storage=/etc/traefik/acme.json
-      - --log.level=DEBUG
     ports:
       - "80:80"
       - "443:443"
