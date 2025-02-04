@@ -9,6 +9,8 @@
 		"start": "node dist/server.js",
 		"dev": "tsx watch src/server.ts",
 		"migrate": "prisma migrate deploy",
+		"prisma-migrate-dev": "docker exec myApp npx prisma migrate dev",
+		"prisma-migrate-deploy": "docker exec myApp npx prisma migrate deploy",
 		"studio": "prisma studio",
 		"build": "tsc"
 	},

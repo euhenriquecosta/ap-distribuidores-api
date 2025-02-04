@@ -5,6 +5,7 @@ services:
     image: postgres:14-alpine
     container_name: postgres-db
     environment:
+      POSTGRES_HOST: postgres
       POSTGRES_USER: apdistribuidores
       POSTGRES_PASSWORD: A1b2C3d4E5f6G7h8I9j0K!
       POSTGRES_DB: ap
@@ -26,7 +27,7 @@ services:
     container_name: node-app
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://apdistribuidores:A1b2C3d4E5f6G7h8I9j0K!@postgres-db:5432/ap?schema=public
+      DATABASE_URL: postgresql://apdistribuidores:A1b2C3d4E5f6G7h8I9j0K!@postgres:5432/ap?schema=public
       JWT_SECRET_KEY: skdjaksjdkmasdkamskm
     ports:
       - "3333:3333"
@@ -42,6 +43,4 @@ volumes:
 
 networks:
   APNet:
-    external: true
-    attachable: true
-    name: APNet
+    driver: bridge
