@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
     deploy:
       replicas: 1
-    command: ["/bin/sh", "-c", "npx prisma migrate deploy && npm start"]
+    command: ["/bin/sh", "-c", "npx wait-for-it postgres-db:5432 -- npx prisma migrate deploy && npm start"]
 
   traefik:
     image: traefik:v2.10
