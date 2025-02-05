@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { prisma } from "../../prisma/script";
 import { hashPassword } from "../../utils/crypt";
 import { UUID } from "node:crypto";
@@ -23,6 +23,7 @@ export const createUser = async (data: CreateUserRequestBody) => {
         LAST_NAME: data.LAST_NAME,
         EMAIL: data.EMAIL,
         PASSWORD: hashedPassword,
+        AVATAR: null
       },
     });
 
@@ -47,4 +48,23 @@ export const getUserByEmail = async (email: string) => {
       EMAIL: email
     }
   });
+};
+
+export const getUserById = async (id: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      USER_ID: id
+    }
+  });
+}
+
+export const updatePhoto = async (id: string, photo: string) => {
+  return await prisma.user.update({
+    where: {
+      USER_ID: id
+    },
+    data: {
+      AVATAR: photo
+    }
+  })
 };
