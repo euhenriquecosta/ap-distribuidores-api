@@ -16,7 +16,11 @@ export async function authMiddleware(request: FastifyRequest, reply: FastifyRepl
     
     // const decoded = verifyToken(token); Serve para guardar as informações desse jwt e salvar em um json
     // request.body = decoded; 
-
+    
+    const decoded = verifyToken(token);
+    
+    const body = request.body as { user?: any };
+    body.user = decoded;
   } catch (error) {
     console.error("Erro na autenticação:", error);
     return reply.status(401).send({ message: "Token inválido ou expirado" });
