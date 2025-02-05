@@ -1,5 +1,4 @@
 import { PlanTypeEnum, RegionEnum } from "@prisma/client";
-import { UUID } from "node:crypto";
 
 export interface IDistributor {
   DISTRIBUTOR_ID: string;
