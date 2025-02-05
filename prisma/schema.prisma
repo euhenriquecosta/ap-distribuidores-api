@@ -28,6 +28,7 @@ model User {
   USER_ID           String      @id @default(uuid())
   FIRST_NAME    String
   LAST_NAME     String
+  AVATAR String
   EMAIL        String   @unique
   PASSWORD String
   CREATED_AT DateTime @default(now())
