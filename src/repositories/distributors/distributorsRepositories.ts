@@ -22,8 +22,6 @@ export const createDistributors = async (data: IDistributor ) => {
         ADDRESS: data.ADDRESS,
         LATITUDE: data.LATITUDE,
         LONGITUDE: data.LONGITUDE,
-        POSTAL_CODE: data.POSTAL_CODE,
-        REGION: data.REGION,
         WHATSAPP_NUMBER: data.WHATSAPP_NUMBER,
         CREATED_AT: new Date(),
         UPDATED_AT: new Date(),

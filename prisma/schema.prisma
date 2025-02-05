@@ -16,14 +16,6 @@ enum PlanTypeEnum {
   starter
 }
 
-enum RegionEnum {
-  norte
-  nordeste
-  centrooeste
-  sudeste
-  sul
-}
-
 model User {
   USER_ID           String      @id @default(uuid())
   FIRST_NAME    String
@@ -40,8 +32,6 @@ model Distributor {
   AVATAR String?
   PLAN_TYPE PlanTypeEnum
   ADDRESS         String
-  REGION          RegionEnum
-  POSTAL_CODE      String
   LONGITUDE       Float @unique
   LATITUDE        Float @unique
   WHATSAPP_NUMBER  String
@@ -53,8 +43,5 @@ model Distributor {
   UPDATED_AT       DateTime @updatedAt
 
   @@unique([LATITUDE, LONGITUDE], name: "UNIQUE_LAT_LONG")
-
-  @@index([REGION], name: "IDX_DISTRIBUTOR_REGION")
-  @@index([POSTAL_CODE], name: "IDX_DISTRIBUTOR_POSTAL_CODE")
   @@index([LATITUDE, LONGITUDE], name: "IDX_DISTRIBUTOR_LATITUDE_LONGITUDE")
 }

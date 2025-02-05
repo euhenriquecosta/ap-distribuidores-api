@@ -1,11 +1,9 @@
-import { PlanTypeEnum, RegionEnum } from "@prisma/client";
+import { PlanTypeEnum } from "@prisma/client";
 
 export interface IDistributor {
   DISTRIBUTOR_ID: string;
   PLAN_TYPE: PlanTypeEnum; 
   ADDRESS: string;
-  REGION: RegionEnum;
-  POSTAL_CODE: string;
   LONGITUDE: number;
   LATITUDE: number;
   WHATSAPP_NUMBER: string;
