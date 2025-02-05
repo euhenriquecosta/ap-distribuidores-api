@@ -28,7 +28,7 @@ model User {
   USER_ID           String      @id @default(uuid())
   FIRST_NAME    String
   LAST_NAME     String
-  AVATAR String
+  AVATAR String?
   EMAIL        String   @unique
   PASSWORD String
   CREATED_AT DateTime @default(now())
@@ -37,6 +37,7 @@ model User {
 
 model Distributor {
   DISTRIBUTOR_ID              String      @id @default(uuid())
+  AVATAR String?
   PLAN_TYPE PlanTypeEnum
   ADDRESS         String
   REGION          RegionEnum
