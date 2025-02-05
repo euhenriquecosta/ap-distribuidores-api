@@ -8,5 +8,6 @@ tsconfig.tsbuildinfo
 npm-debug.log
 .git
 compose
+uploads
 
 .vscode
