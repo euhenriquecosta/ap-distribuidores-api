@@ -1,5 +1,5 @@
 import { IDistributor } from "../interfaces/distributorInterface";
-import { createDistributors, deleteDistributor, findDistributor, listDistributors, updateDistributors } from "../repositories/distributors/distributorsRepositories";
+import { createDistributors, deleteDistributor, findDistributor, listDistributors, updateDistributorPhoto, updateDistributors } from "../repositories/distributors/distributorsRepositories";
 
 export const listDistributorsService = async () => {
   return listDistributors();
@@ -21,3 +21,6 @@ export const findDistributorService = async (id: string) => {
   return findDistributor(id);
 }
 
+export const updateDistributorPhotoService = async (id: string, photo: string) => {
+  return updateDistributorPhoto(id, photo);
+}

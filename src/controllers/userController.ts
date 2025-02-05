@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { createUserService, getUserByEmailService, getUserByIdService, listUserService, updatePhotoService } from "../services/userServices";
+import { createUserService, getUserByEmailService, getUserByIdService, listUserService, updateUserPhotoService } from "../services/userServices";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt";
 import { CreateUserRequestBody } from "../interfaces/userInterface";
@@ -99,7 +99,7 @@ export const userController = {
       });
 
       // Atualiza o avatar do usuário no banco de dados
-      updatePhotoService(userId, filePath).then(() => {
+      updateUserPhotoService(userId, filePath).then(() => {
         reply.status(200).send({ message: 'Foto de perfil atualizada com sucesso!' });
       }).catch((error) => {
         reply.status(500).send({ error: 'Erro ao atualizar a foto de perfil!' });

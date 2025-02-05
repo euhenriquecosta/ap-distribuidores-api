@@ -58,7 +58,7 @@ export const getUserById = async (id: string) => {
   });
 }
 
-export const updatePhoto = async (id: string, photo: string) => {
+export const updateUserPhoto = async (id: string, photo: string) => {
   return await prisma.user.update({
     where: {
       USER_ID: id

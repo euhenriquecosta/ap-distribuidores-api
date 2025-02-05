@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail, getUserById, listUsers, updatePhoto } from "../repositories/users/userRepositories";
+import { createUser, getUserByEmail, getUserById, listUsers, updateUserPhoto } from "../repositories/users/userRepositories";
 
 export const listUserService = async () => {
   return listUsers();
@@ -16,6 +16,6 @@ export const getUserByIdService = async (id: string) => {
   return getUserById(id);
 }
 
-export const updatePhotoService = async (id: string, photo: string) => {
-  return updatePhoto(id, photo);
+export const updateUserPhotoService = async (id: string, photo: string) => {
+  return updateUserPhoto(id, photo);
 }

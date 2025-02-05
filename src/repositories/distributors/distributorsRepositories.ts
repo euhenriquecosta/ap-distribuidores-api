@@ -27,6 +27,7 @@ export const createDistributors = async (data: IDistributor ) => {
         WHATSAPP_NUMBER: data.WHATSAPP_NUMBER,
         CREATED_AT: new Date(),
         UPDATED_AT: new Date(),
+        AVATAR: null
       }
     });
   } catch (error) {
@@ -49,4 +50,15 @@ export const findDistributor = async (id: string) => {
 
 export const findDistributorsByName = async (name: string) => {
   return prisma.distributor.findFirst({ where: {FIRST_NAME: name} });
+}
+
+export const updateDistributorPhoto = async (id: string, photo: string) => {
+  return prisma.distributor.update({ 
+    where: { 
+      DISTRIBUTOR_ID: id 
+    },
+    data: {
+      AVATAR: photo
+    } 
+  });
 }
