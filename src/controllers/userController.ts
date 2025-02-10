@@ -22,6 +22,26 @@ export const userController = {
       reply.status(500).send({ error: 'Internal Server Error' });
     }
   },
+  findUser: async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      const id = request.user.id;
+
+      if (!id) {
+        return reply.status(400).send({ error: 'Token de autenticação não informado!' });
+      }
+
+      const user = await getUserByIdService(id);
+
+      if (!user) {
+        return reply.status(404).send({ error: 'Usuário não encontrado!' });
+      }
+
+      reply.status(200).send(user);
+    } catch (error) {
+      console.error('Error finding user:', error);
+      reply.status(500).send({ error: 'Internal Server Error' });
+    }
+  },
   createUser: async (request: FastifyRequest<{ Body: CreateUserRequestBody }>, reply: FastifyReply) => {
     try {
       const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = request.body;
