@@ -5,7 +5,6 @@ import { generateToken } from "../utils/jwt";
 import { CreateUserRequestBody } from "../interfaces/userInterface";
 import fs from "fs";
 import path from "path";
-import { error } from "console";
 
 interface LoginUserRequestBody {
   EMAIL: string;
