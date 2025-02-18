@@ -1,5 +1,6 @@
 import { IDistributor } from "../../interfaces/distributorInterface";
 import { prisma } from "../../prisma/script";
+import { getDistance } from 'geolib';
 
 export const listDistributors = async () => {
   try {
@@ -59,4 +60,18 @@ export const updateDistributorPhoto = async (id: string, photo: string) => {
       AVATAR: photo
     } 
   });
+}
+
+export const findNearbyDistributors = async (userLocation: { latitude: number, longitude: number }, rangeInKm: number) => {
+  const distributors = await prisma.distributor.findMany();
+
+  const filteredDistributors = distributors.filter(distributorLocation => {
+    const distance = getDistance(
+      { latitude: distributorLocation.LATITUDE, longitude: distributorLocation.LONGITUDE },
+      { latitude: userLocation.latitude, longitude: userLocation.longitude }
+    );
+    return distance <= rangeInKm * 1000;
+  });
+
+  return filteredDistributors;
 }

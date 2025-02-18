@@ -2,6 +2,7 @@ import {
   createDistributorsService, 
   deleteDistributorService, 
   findDistributorService, 
+  findNearbyDistributorsService, 
   listDistributorsService, 
   updateDistributorPhotoService, 
   updateDistributorsService
@@ -12,6 +13,28 @@ import path from "path";
 import fs from "fs";
 
 export const distributorController = {
+  findNearbyDistributors: async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      // Garante que body existe e extrai os valores com fallback vazio
+      const body = request.body as { coordinates?: { latitude: number, longitude: number }, range?: number } || {};
+  
+      // Verifica se os campos obrigatórios estão presentes
+      if (!body.coordinates || !body.range) {
+        return reply.status(400).send({ error: "Coloque no corpo da requisição latitude, longitude e range. Eles são obrigatórios!" });
+      }
+  
+      const { latitude, longitude } = body.coordinates;
+  
+      // Chama o serviço para buscar distribuidores
+      const nearbyDistributors = await findNearbyDistributorsService({ latitude, longitude }, body.range);
+  
+      reply.status(200).send(nearbyDistributors);
+    } catch (error) {
+      console.error("Error finding nearby distributors:", error);
+      reply.status(500).send({ error: "Internal Server Error" });
+    }
+  },
+
   listDistributors: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const distributors = await listDistributorsService();

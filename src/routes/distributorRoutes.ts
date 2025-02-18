@@ -9,4 +9,5 @@ export const distributorRoutes = async (fastify: FastifyInstance) => {
   fastify.put("/distributors/:id", { preHandler: authMiddleware }, distributorController.editDistributor);
   fastify.post("/distributor/upload/avatar/:id", { preHandler: authMiddleware }, distributorController.uploadPhoto);
   fastify.post("/distributors", { preHandler: authMiddleware }, distributorController.createDistributors);
+  fastify.post("/distributors/nearby", distributorController.findNearbyDistributors);
 };
