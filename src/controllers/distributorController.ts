@@ -71,7 +71,7 @@ export const distributorController = {
       const uploadDir = path.join(process.cwd(), "uploads/distributor/avatar");
 
       // Defina a URL base (isso pode ser dinâmico, dependendo do ambiente)
-      const baseUrl = process.env.RAILWAY_PUBLIC_DOMAIN ? process.env.RAILWAY_PUBLIC_DOMAIN : 'http://localhost:3333'
+      const baseUrl = process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : 'http://localhost:3333'
 
       // Verifica se o diretório de upload existe, senão cria
       if (!fs.existsSync(uploadDir)) {
