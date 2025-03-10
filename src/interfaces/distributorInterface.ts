@@ -1,6 +1,7 @@
 import { PlanTypeEnum } from "@prisma/client";
 
 export interface IDistributor {
+  AVATAR: string | null;
   DISTRIBUTOR_ID: string;
   PLAN_TYPE: PlanTypeEnum; 
   ADDRESS: string;
