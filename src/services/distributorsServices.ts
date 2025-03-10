@@ -1,5 +1,5 @@
 import { IDistributor } from "../interfaces/distributorInterface";
-import { createDistributors, deleteDistributor, findDistributor, findNearbyDistributors, listDistributors, updateDistributorPhoto, updateDistributors } from "../repositories/distributors/distributorsRepositories";
+import { createDistributors, deleteDistributor, findDistributor, findNearbyDistributors, getDistributorAvatar, listDistributors, updateDistributorPhoto, updateDistributors } from "../repositories/distributors/distributorsRepositories";
 
 export const listDistributorsService = async () => {
   return listDistributors();
@@ -23,6 +23,10 @@ export const findDistributorService = async (id: string) => {
 
 export const updateDistributorPhotoService = async (id: string, photo: string) => {
   return updateDistributorPhoto(id, photo);
+}
+
+export const getDistributorAvatarService = async (id: string) => {
+  return getDistributorAvatar(id)
 }
 
 export const findNearbyDistributorsService = async (userCoordinates: { latitude: number, longitude: number }, range: number) => {

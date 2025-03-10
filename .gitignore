@@ -11,3 +11,5 @@ compose
 uploads
 
 .vscode
+
+.DS_Store

@@ -3,6 +3,7 @@ import {
   deleteDistributorService, 
   findDistributorService, 
   findNearbyDistributorsService, 
+  getDistributorAvatarService, 
   listDistributorsService, 
   updateDistributorPhotoService, 
   updateDistributorsService
@@ -11,6 +12,10 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { IDistributor } from "../interfaces/distributorInterface";
 import path from "path";
 import fs from "fs";
+import { pipeline } from "stream";
+import { promisify } from "util";
+
+const pump = promisify(pipeline);
 
 export const distributorController = {
   findNearbyDistributors: async (request: FastifyRequest, reply: FastifyReply) => {
@@ -55,54 +60,70 @@ export const distributorController = {
     }
   },
   uploadPhoto: async (request: FastifyRequest, reply: FastifyReply) => {
-      try {
-        const { file } = await request.file()
-        const { id } = request.params as { id: string };
-        const distributorId = id;
-  
-        if (!distributorId) {
-          return reply.status(400).send({ error: 'Token de autenticação não informado!' });
-        }
-  
-        if (!file) {
-          return reply.status(400).send({ error: 'Nenhum arquivo enviado!' });
-        }
-  
-        // Diretório que o arquivo será salvo
-        const uploadDir = path.join(process.cwd(), "uploads/distributor/avatar");
-        console.log(uploadDir)
-  
-  
-        // Se o diretório não existir, ele é criado
-        if (!fs.existsSync(uploadDir)) {
-          fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        
-        // Caminho do arquivo
-        const filePath = path.join(uploadDir, `${distributorId}.png`);
-  
-        // Cria um stream para salvar o arquivo
-        const fileStream = fs.createWriteStream(filePath);
-  
-        await new Promise((resolve, reject) => {
-          file.pipe(fileStream);
-          file.on('end', resolve);
-          file.on('error', reject);
-        });
-  
-        // Atualiza o avatar do usuário no banco de dados
-        updateDistributorPhotoService(distributorId, filePath).then(() => {
-          reply.status(200).send({ message: 'Foto de perfil atualizada com sucesso!' });
-        }).catch((error) => {
-          console.log("Erro ao atualizar a foto de perfil:", error);
-          reply.status(500).send({ error: 'Erro ao atualizar a foto de perfil!' });
-        });
-  
-      } catch (error) {
-        console.error('Error uploading photo:', error);
-        reply.status(500).send({ error: 'Internal Server Error' });
+    try {
+      const { file } = await request.file();
+      const { id } = request.params as { id: string };
+      const distributorId = id;
+
+      if (!distributorId) {
+        return reply.status(400).send({ error: 'Token de autenticação não informado!' });
       }
-  },
+
+      if (!file) {
+        return reply.status(400).send({ error: 'Nenhum arquivo enviado!' });
+      }
+
+      // Diretório que o arquivo será salvo
+      const uploadDir = path.join(process.cwd(), "uploads/distributor/avatar");
+      console.log("Caminho do diretório de upload:", uploadDir);
+      
+      if (!fs.existsSync(uploadDir)) {
+        console.log("Criando diretório...");
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
+      const distributor = await getDistributorAvatarService(distributorId);
+      let message = "Foto de perfil criada com sucesso!";
+
+      if (distributor?.AVATAR) {
+        const oldFilePath = distributor.AVATAR;
+
+        // Remove o arquivo antigo se existir
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+          message = "Foto de perfil alterada com sucesso!";
+        }
+      }
+      
+      // Nome do arquivo
+      const fileName = `${distributorId}.png`;
+      // Caminho do arquivo
+      const filePath = path.join(uploadDir, fileName);
+
+      // Cria um stream para salvar o arquivo
+      const fileStream = fs.createWriteStream(filePath);
+
+      await new Promise<void>((resolve, reject) => {
+        file.pipe(fileStream);
+        file.on('end', () => {
+          console.log("Upload de arquivo concluído.");
+          resolve();
+        });
+        file.on('error', (err) => {
+          console.error("Erro durante o upload do arquivo:", err);
+          reject(err);
+        });
+      });
+
+      // Atualiza o avatar do usuário no banco de dados
+      updateDistributorPhotoService(distributorId, filePath);
+
+      reply.status(200).send({ message, path: filePath, filename: fileName });
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+      reply.status(500).send({ error: 'Internal Server Error' });
+    }
+},
   deleteDistributor: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const { id } = request.params as { id: string };

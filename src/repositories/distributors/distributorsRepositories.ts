@@ -62,6 +62,13 @@ export const updateDistributorPhoto = async (id: string, photo: string) => {
   });
 }
 
+export const getDistributorAvatar = async (id: string) => {
+  return await prisma.distributor.findUnique({
+    where: { DISTRIBUTOR_ID: id },
+    select: { AVATAR: true },
+  });
+}
+
 export const findNearbyDistributors = async (userLocation: { latitude: number, longitude: number }, rangeInKm: number) => {
   const distributors = await prisma.distributor.findMany();
 
